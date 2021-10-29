@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This software has been provided to provide sample code and to aid
+  ~ the software engineering community. It is published under the MIT
+  ~ license. You are welcome to use the code, but please do not take credit
+  ~ for my work.
+  ~
+  ~ Author: DenalidTX
+  ~ Twitter: @DenalidTX
+  ~ Twitch: https://www.twitch.tv/denalidtx
+  -->
+
+<!--
+  ~ This software has been provided to provide sample code and to aid
+  ~ the software engineering community. It is published under the MIT
+  ~ license. You are welcome to use the code, but please do not take credit
+  ~ for my work.
+  ~
+  ~ Author: DenalidTX
+  ~ Twitter: @DenalidTX
+  ~ Twitch: https://www.twitch.tv/denalidtx
+  -->
+
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.denalidtx</groupId>
+    <artifactId>spring-boot-jpms-sample</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+        <!-- Not having this causes compile warnings, but you can probably do without it.. -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- This specifies the main class for the jar generated in the build. -->
+        <start-class>com.denalidtx.samples.jpms.springboot.Main</start-class>
+    </properties>
+
+    <!-- Inherit defaults from Spring Boot -->
+    <!-- The dependencies don't work properly without this. -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.4</version>
+    </parent>
+
+    <dependencies>
+        <!-- This is what actually gives us our dependencies. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <!-- This tells Maven to copy all dependencies to the deploy/lib directory. -->
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/deploy/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- This tells Maven to put the application jar into the deploy/lib directory. -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>${project.basedir}/deploy/lib</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
